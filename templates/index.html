@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RebalanceCalc Dashboard</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- FontAwesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    body.dark { background: #121212; color: #eee; }
+    .dark .card { background: #1e1e1e; border-color: #333; }
+    .dark .accordion-button { background: #1e1e1e; color: #eee; }
+    .theme-toggle { cursor: pointer; }
+  </style>
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">Rebalance<span class="text-primary">Calc</span></a>
+      <div class="ms-auto theme-toggle" id="theme-toggle">
+        <i class="fa-regular fa-moon fa-lg"></i>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mb-5">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Simulation Parameters</h5>
+        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#form-panel">
+          <i class="fa fa-sliders"></i> Toggle
+        </button>
+      </div>
+      <div class="collapse show" id="form-panel">
+        <div class="card-body">
+          <form id="calc-form" class="row g-3" novalidate>
+            <div class="col-md-4">
+              <label class="form-label">Initial Investment</label>
+              <input type="number" class="form-control"
+                     id="initial-investment" name="initial_investment"
+                     min="0" step="0.01" value="100000.00" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">
+                Allocation A (%) <span id="alloc-value" class="fw-bold">50%</span>
+              </label>
+              <input type="range" class="form-range"
+                     id="allocation-a" name="allocation_a"
+                     min="0" max="100" step="1" value="50" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Horizon (years)</label>
+              <input type="number" class="form-control"
+                     id="horizon" name="horizon"
+                     min="1" max="50" step="1" value="10" required>
+            </div>
+
+            <div class="col-12">
+              <div class="accordion" id="returns-accordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#returns-panel">
+                      Yearly Returns (%)
+                    </button>
+                  </h2>
+                  <div id="returns-panel" class="accordion-collapse collapse show">
+                    <div class="accordion-body row g-3" id="returns-inputs">
+                      <!-- JS renders here -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h6 class="mb-0">Withdrawals</h6>
+                </div>
+                <div class="card-body">
+                  <div id="withdrawals-container"></div>
+                  <button type="button"
+                          id="add-withdrawal-btn"
+                          class="btn btn-sm btn-secondary mt-2">
+                    <i class="fa fa-plus"></i> Add Withdrawal
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 text-end">
+              <button type="submit"
+                      id="calculate-btn"
+                      class="btn btn-primary btn-lg"
+                      disabled>
+                <span class="spinner-border spinner-border-sm me-2 d-none"
+                      id="loading-spinner"
+                      role="status"></span>
+                Run Simulation
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-4" id="kpi-cards" style="display:none;"></div>
+    <div class="card mb-4 shadow-sm" id="chart-card" style="display:none;">
+      <div class="card-body">
+        <canvas id="balance-chart" height="100"></canvas>
+      </div>
+    </div>
+    <div class="accordion" id="results-accordion" style="display:none;"></div>
+  </main>
+
+  <footer class="text-center py-3 border-top bg-white">
+    <small>© 2025 RebalanceCalc · Built with Flask, Bootstrap & Chart.js</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
