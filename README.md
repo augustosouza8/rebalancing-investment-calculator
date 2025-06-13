@@ -2,7 +2,7 @@
 
   
 
-> **RebalanceCalc** is a lightweight Flask application & REST API for modelling two‐asset portfolios under four scenarios: 100 % Strategy A, 100 % Strategy B, No Rebalance, and Annual Rebalance. It lets you feed in custom yearly returns, apply withdrawals in **USD** or **% of balance**, and instantly visualise results in an interactive dashboard powered by Bootstrap 5 and Chart.js.fileciteturn0file0
+> **RebalanceCalc** is a lightweight Flask application & REST API for modelling two‐asset portfolios under four scenarios: 100 % Strategy A, 100 % Strategy B, No Rebalance, and Annual Rebalance. It lets you feed in custom yearly returns, apply withdrawals in **USD** or **% of balance**, and instantly visualise results in an interactive dashboard powered by Bootstrap 5 and Chart.js.
 
 ---
 
