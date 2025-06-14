@@ -24,8 +24,9 @@ def create_app() -> Flask:
 
     return app
 
+# WSGI entrypoint for Gunicorn on Render
+application = create_app()
 
 # If run directly, start the dev server
 if __name__ == "__main__":
-    app = create_app()
-    app.run(debug=True)  # debug=True for development only
+    application.run(debug=True)  # debug=True for development only
